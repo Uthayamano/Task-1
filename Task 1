@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Navigation Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav id="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <section id="home">
+            <h1>Home</h1>
+            <p>Welcome to the home page.</p>
+        </section>
+        <section id="about">
+            <h1>About</h1>
+            <p>Learn more about us.</p>
+        </section>
+        <section id="services">
+            <h1>Services</h1>
+            <p>Discover our services.</p>
+        </section>
+        <section id="contact">
+            <h1>Contact</h1>
+            <p>Get in touch with us.</p>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(0,123,255,1) 0%, rgba(0,82,255,1) 100%);
+    padding: 10px 0;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+#navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+#navbar ul li {
+    margin: 0 15px;
+}
+
+#navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+#navbar ul li a:hover {
+    color: #ffd700;
+}
+
+#content {
+    padding-top: 60px;
+}
+
+section {
+    padding: 50px 20px;
+}
+
+section:nth-of-type(even) {
+    background: #f4f4f4;
+}
+window.addEventListener('scroll', function() {
+    var navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+        navbar.style.background = 'linear-gradient(90deg, rgba(0,82,255,1) 0%, rgba(0,123,255,1) 100%)';
+    } else {
+        navbar.style.background = 'linear-gradient(90deg, rgba(0,123,255,1) 0%, rgba(0,82,255,1) 100%)';
+    }
+});
