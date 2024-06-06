@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Stopwatch</h1>
+        <div id="display">00:00:00</div>
+        <div class="buttons">
+            <button id="startStopBtn">Start</button>
+            <button id="resetBtn">Reset</button>
+            <button id="lapBtn">Lap</button>
+        </div>
+        <ul id="laps"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+/* styles.css */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+#display {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#laps {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+#laps li {
+    font-size: 18px;
+    padding: 5px 0;
+}
+// script.js
+
+let startTime, elapsedTime = 0, intervalId;
+const display = document.getElementById('display');
+const startStopBtn = document.getElementById('startStopBtn');
+const resetBtn = document.getElementById('resetBtn');
+const lapBtn = document.getElementById('lapBtn');
+const laps = document.getElementById('laps');
+
+function updateTime() {
+    const time = Date.now() - startTime + elapsedTime;
+    const hours = Math.floor(time / (1000 * 60 * 60));
+    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+    display.textContent = 
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+startStopBtn.addEventListener('click', () => {
+    if (intervalId) {
+        elapsedTime += Date.now() - startTime;
+        clearInterval(intervalId);
+        intervalId = null;
+        startStopBtn.textContent = 'Start';
+    } else {
+        startTime = Date.now();
+        intervalId = setInterval(updateTime, 1000);
+        startStopBtn.textContent = 'Stop';
+    }
+});
+
+resetBtn.addEventListener('click', () => {
+    clearInterval(intervalId);
+    intervalId = null;
+    startTime = null;
+    elapsedTime = 0;
+    display.textContent = '00:00:00';
+    startStopBtn.textContent = 'Start';
+    laps.innerHTML = '';
+});
+
+lapBtn.addEventListener('click', () => {
+    if (intervalId) {
+        const lapTime = display.textContent;
+        const lapItem = document.createElement('li');
+        lapItem.textContent = lapTime;
+        laps.appendChild(lapItem);
+    }
+});
